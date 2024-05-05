@@ -21,6 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'account_type',
+        'balance',
     ];
 
     /**
@@ -41,4 +43,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function transactions(){
+        return $this->hasMany(Transaction::class);
+    }
+    public function deposit(){
+        return $this->transactions()->where('transaction_type','Deposit');
+    }
+    public function Withdraw(){
+        return $this->transactions()->where('transaction_type','Withdraw');
+    }
 }
+
